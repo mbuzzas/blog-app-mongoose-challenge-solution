@@ -133,7 +133,7 @@ describe('Blog Post API resource', function() {
 	});
 
 	describe('PUT endpoint', function() {
-		it('should update fields you send over' function() {
+		it('should update fields you send over', function() {
 			const updateData = {
 				title: 'bizz bar',
 				content: 'buzz buzz buzz',
@@ -161,7 +161,7 @@ describe('Blog Post API resource', function() {
 		});
 	});
 
-	describe('DELETE endpoint' function() {
+	describe('DELETE endpoint', function() {
 		it('delete blog post by id', function() {
 			let post;
 			return BlogPost

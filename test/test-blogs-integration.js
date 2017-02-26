@@ -29,5 +29,8 @@ function seedBlogPostData() {
 	return BlogPost.insertMany(seedData);
 }
 
-function tearDownDb
+function tearDownDb() {
+	console.warn('Deleting database');
+	return mongoose.connection.dropDatabase();
+}
 

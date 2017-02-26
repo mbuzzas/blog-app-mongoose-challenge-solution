@@ -126,8 +126,8 @@ describe('Blog Post API resource', function() {
 				.then(function(post) {
 					post.title.should.equal(newPost.title);
 					post.content.should.equal(newPost.content);
-					post.author.firstName.should.equal(newPost.auhtor.firstName);
-					post.author.lastName.should.equal(newPost.auhtor.lastName);
+					post.author.firstName.should.equal(newPost.author.firstName);
+					post.author.lastName.should.equal(newPost.author.lastName);
 				});
 		});
 	});

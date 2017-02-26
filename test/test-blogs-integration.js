@@ -115,7 +115,7 @@ describe('Blog Post API resource', function() {
 				.then(function(res) {
 					res.should.have.status(201);
 					res.should.be.json;
-					res.body.should.be.a('obect');
+					res.body.should.be.a('object');
 					res.body.should.include.keys('id', 'title', 'author', 'content', 'created');
 					res.body.title.should.equal(newPost.title);
 					res.body.id.should.not.be.null;
@@ -149,7 +149,7 @@ describe('Blog Post API resource', function() {
 						.send(updateData);
 				})
 				.then(function(res) {
-					res.should.have.status(204);
+					res.should.have.status(201);
 					return BlogPost.findById(updateData.id).exec();
 				})
 				.then(function(post) {
@@ -169,7 +169,7 @@ describe('Blog Post API resource', function() {
 				.exec()
 				.then(function(_post) {
 					post = _post;
-					return chai.request(app).delete(`/posts/${posts.id}`);
+					return chai.request(app).delete(`/posts/${post.id}`);
 				})
 				.then(function(res) {
 					res.should.have.status(204);

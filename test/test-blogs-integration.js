@@ -19,11 +19,11 @@ function seedBlogPostData() {
 	for (let i=1; i<=10; i++) {
 		seedData.push({
 			author: {
-				firstName: faker.name.firstName(),
-				lastName: faker.name.lastName()
-			}
-			title: faker.lorem.sentence(),
-			content: faker.lorem.text()
+        		firstName: faker.name.firstName(),
+        		lastName: faker.name.lastName()
+     		},
+      		title: faker.lorem.sentence(),
+      		content: faker.lorem.text()
 		});
 	}
 	return BlogPost.insertMany(seedData);

@@ -29,8 +29,98 @@ function seedBlogPostData() {
 	return BlogPost.insertMany(seedData);
 }
 
+function generatePostData() {
+	return {
+		title: faker.lorem.sentence(),
+        author: {
+            firstName: faker.name.firstName(),
+            lastName: faker.name.lastName(),
+        },
+        content: faker.lorem.text()
+	}
+}
+
 function tearDownDb() {
 	console.warn('Deleting database');
 	return mongoose.connection.dropDatabase();
 }
+
+describe('Blog Post API resource', function() {
+
+	before(function() {
+		return runServer(TEST_DATABASE_URL);
+	});
+
+	beforeEach(function() {
+		return seedBlogPostData();
+	});
+
+	afterEach(function() {
+		return tearDownDb();
+	});
+
+	after(function() {
+		return closeServer();
+	})
+
+	describe('GET endpoint', function() {
+
+		it('should return all existing blog posts', function() {
+			let res;
+			return chai.request(app)
+				.get('/posts')
+				.then(function(_res) {
+					res = _res;
+					res.should.have.status(200);
+					res.body.should.have.length.of.at.least(1);
+					return BlogPost.count();
+				})
+				.then(function(count) {
+					res.body.should.have.length.of(count);
+				});
+		});
+
+		it('should return blog posts with right fields', function() {
+			let resPost;
+			return chai.request(app)
+				.get('/posts')
+				.then(function(res) {
+					res.should.have.status(200);
+					res.should.be.json;
+					res.body.should.be.a('array');
+					res.body.should.have.length.of.at.least(1);
+					res.body.forEach(function(post) {
+						post.should.be.a('object');
+						post.should.include.keys('id', 'title', 'author', 'content', 'created');
+					});
+					resPost = res.body[0];
+					return BlogPost.findById(resPost.id);
+				})
+				.then(function(post) {
+					resPost.id.should.equal(post.id);
+					resPost.title.should.equal(post.title);
+					resPost.content.should.equal(post.content);
+					resPost.author.should.equal(post.authorName);
+				});
+		});
+	});
+
+	describe('POST endpoint', function() {
+
+		it('should add a new blog post', function() {
+			const newPost = gener
+		})
+	})
+})
+
+
+
+
+
+
+
+
+
+
+
 

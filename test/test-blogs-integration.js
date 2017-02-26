@@ -132,6 +132,35 @@ describe('Blog Post API resource', function() {
 		});
 	});
 
+	describe('PUT endpoint', function() {
+		it('should update fields you send over' function() {
+			const updateData = {
+				title: 'bizz bar',
+				content: 'buzz buzz buzz',
+				author: {firstName: 'foo', lastName: 'bar'}
+			};
+			return BlogPost
+				.findOne()
+				.exec()
+				.then(function(post) {
+					updateData.id = post.id;
+					return chai.request(app)
+						.put(`/posts/${post.id}`)
+						.send(updateData);
+				})
+				.then(function(res) {
+					res.should.have.status(204);
+					return BlogPost.findById(updateData.id).exec();
+				})
+				.then(function(post) {
+					post.title.should.equal(updateData.title);
+					post.content.should.equal(updateData.content);
+					post.author.firstName.should.equal(updateData.author.firstName);
+					post.author.lastName.should.equal(updateData.author.lastName);
+				});
+		});
+	});
+
 	
 })
 
